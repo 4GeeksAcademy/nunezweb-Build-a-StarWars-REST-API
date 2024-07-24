@@ -90,13 +90,10 @@ def get_planet(planet_id):
     return jsonify(planet.serialize()), 200
 
 @app.route('/users/favorites', methods=["GET"])
-def get_list_favorites():
+def get_list_favorites():   
     user = Users.query.filter_by(id=1).first()
     if user is None:
         return jsonify({"info": "Not found"}), 404
-
-    print(user.favorites_planets)
-    print(user.favorites_people)
     response = user.serialize()
     response["favorites"] = list(
         map(lambda planet: planet.serialize(), user.favorites_planets)) + list(
