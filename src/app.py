@@ -145,7 +145,6 @@ def delete_favorite_planet(id):
     return jsonify({"message": "Favorite Planet deleted to favorite"}), 200
 
 
-
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
