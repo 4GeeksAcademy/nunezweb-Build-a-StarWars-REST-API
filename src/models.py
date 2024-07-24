@@ -90,35 +90,35 @@ class Planets(db.Model):
 class Favorites_People(db.Model):
     __tablename__ = 'favorites_people'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship(Users, back_populates="favorites_people")
-    people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable=False)
     people = db.relationship(People, back_populates="favorites_people")
 
     def __repr__(self):
         return '<Favorite_People %r>' % self.id
 
     def serialize(self):
+
         return {
             "id": self.id,
-            "user": self.user.first_name,
-            "people": self.people.name_people,
+            "people_name": self.people.name_people
         }
 
 class Favorites_Planets(db.Model):
     __tablename__ = 'favorites_planets'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship(Users)
-    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
-    planet = db.relationship(Planets)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship(Users, back_populates="favorites_planets")
+    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'), nullable=False)
+    planet = db.relationship(Planets, back_populates="favorites_planets")
 
     def __repr__(self):
         return '<Favorite_Planets %r>' % self.id
 
     def serialize(self):
+
         return {
             "id": self.id,
-            "user": self.user.first_name,
-            "planets": self.planet.planet_name,
+            "planet_name": self.planet.planets_name if self.planet else None
         }   
